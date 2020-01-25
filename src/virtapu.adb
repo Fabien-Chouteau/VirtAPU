@@ -257,6 +257,10 @@ package body VirtAPU is
    is
       Chan : Channel renames This.Channels (Chan_Id);
    begin
+      if Chan.Seq_Remaining_Ticks /= 0 then
+         Chan.Seq_Remaining_Ticks := Chan.Seq_Remaining_Ticks - 1;
+      end if;
+
       if Chan.Seq_Remaining_Ticks = 0 then
          while Chan.Seq_Index in Chan.Seq'Range loop
             declare
@@ -284,10 +288,6 @@ package body VirtAPU is
                                         when N_64th  => 0.015625,
                                         when N_128th => 0.0078125,
                                         when N_256th => 0.0039062));
-
-                  if Chan.Seq_Remaining_Ticks > 0 then
-                     Chan.Seq_Remaining_Ticks := Chan.Seq_Remaining_Ticks - 1;
-                  end if;
 
                when Note_On =>
                   Note_On (This, Chan_Id, Cmd.Freq);
@@ -328,8 +328,6 @@ package body VirtAPU is
             --  Exit if we have to wait before the next command
             exit when Chan.Seq_Remaining_Ticks /= 0;
          end loop;
-      else
-         Chan.Seq_Remaining_Ticks := Chan.Seq_Remaining_Ticks - 1;
       end if;
    end Process_Seq;
 
