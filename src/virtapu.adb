@@ -347,8 +347,14 @@ package body VirtAPU is
          case Chan.Sweep is
             when None => null;
             when Up | Down =>
-               if Chan.Sweep_Remaining > 0 then
+               if Chan.Sweep_Remaining_Ticks > 0 then
                   Chan.Sweep_Remaining_Ticks := Chan.Sweep_Remaining_Ticks - 1;
+               end if;
+
+               if Chan.Sweep_Remaining_Ticks = 0
+                 and then
+                  Chan.Sweep_Remaining > 0
+               then
                   declare
                      Freq : constant Float := Float (Chan.Freq);
                      Sign : constant Float := (if Chan.Sweep = Up then 1.0 else -1.0);
@@ -359,7 +365,7 @@ package body VirtAPU is
                      Chan.Freq := Frequency (Freq + Delt);
 
                      Chan.Sweep_Remaining := Chan.Sweep_Remaining - 1;
-                        Chan.Sweep_Remaining_Ticks := Chan.Sweep_Ticks;
+                     Chan.Sweep_Remaining_Ticks := Chan.Sweep_Ticks;
 
                   end;
                end if;
