@@ -6,7 +6,7 @@ A virtual Audio Processing Unit to simulate 8-bit era game sounds
    - Triangle
    - Noise1 (LFSR 1)
    - Noise2 (LFSR 6)
- - Pulse witdth modulation
+ - Pulse width modulation
  - Decay
  - Frequency sweep
  - Sequencer
