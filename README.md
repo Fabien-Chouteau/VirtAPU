@@ -1,4 +1,5 @@
-![Alire badge](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/virtapu.json)
+[![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/virtapu.json)](https://alire.ada.dev/crates/virtapu.html)
+
 # VirtAPU
 A virtual Audio Processing Unit to simulate 8-bit era game sounds 
 
