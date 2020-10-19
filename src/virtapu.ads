@@ -38,26 +38,26 @@ package VirtAPU is
    --  Change the mode of the channel oscillator
 
    procedure Note_On (This    : in out Instance;
-                      Chan_Id :        Channel_Id;
+                      Chan_Id :        Channel_ID;
                       Freq    :        Frequency)
      with Pre => Chan_Id <= This.Number_Of_Channels;
    --  Start playing a note on the given channel
 
    procedure Note_Off (This    : in out Instance;
-                       Chan_Id :        Channel_Id)
+                       Chan_Id :        Channel_ID)
      with Pre => Chan_Id <= This.Number_Of_Channels;
    --  Stop playing a note on the given channel. If the decay is set to zero,
    --  the channel is muted after this call. If the decay is above zero, the
    --  volume will start to lower after this call.
 
    procedure Set_Width (This    : in out Instance;
-                        Chan_Id :        Channel_Id;
+                        Chan_Id :        Channel_ID;
                         Width   :        Pulse_Width)
      with Pre => Chan_Id <= This.Number_Of_Channels;
    --  Set pulse width for the given channel
 
    procedure Set_Sweep (This        : in out Instance;
-                        Chan_Id     :        Channel_Id;
+                        Chan_Id     :        Channel_ID;
                         Kind        :        Sweep_Kind;
                         Sweep_Len   :        Positive;
                         Sweep_Ticks :        Tick_Count)
@@ -67,7 +67,7 @@ package VirtAPU is
    --  every Sweep_Ticks.
 
    procedure Set_Volume (This    : in out Instance;
-                         Chan_Id :        Channel_Id;
+                         Chan_Id :        Channel_ID;
                          Vol     :        Volume)
      with Pre => Chan_Id <= This.Number_Of_Channels;
    --  Set the Volume for the given channel. When Note_On is called, the output
@@ -76,7 +76,7 @@ package VirtAPU is
    No_Decay  : constant Tick_Count := 0;
 
    procedure Set_Decay (This    : in out Instance;
-                        Chan_Id :        Channel_Id;
+                        Chan_Id :        Channel_ID;
                         Ticks   :        Tick_Count)
      with Pre => Chan_Id <= This.Number_Of_Channels;
    --  Set the number of ticks it will take for the channel envelope to go from

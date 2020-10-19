@@ -27,6 +27,9 @@ package body VirtAPU is
       return Sample
      with Inline;
 
+   procedure Process_Seq (This    : in out Instance;
+                          Chan_Id :        Channel_ID);
+
    -----------------------
    -- Period_In_Samples --
    -----------------------
@@ -104,7 +107,6 @@ package body VirtAPU is
             when others =>
                Next_State := Down;
          end case;
-
 
          if Next_State /= Chan.State then
             if Next_State = Up then
@@ -357,7 +359,10 @@ package body VirtAPU is
                then
                   declare
                      Freq : constant Float := Float (Chan.Freq);
-                     Sign : constant Float := (if Chan.Sweep = Up then 1.0 else -1.0);
+                     Sign : constant Float := (if Chan.Sweep = Up then
+                                                  1.0
+                                               else
+                                                  -1.0);
                      Delt : constant Float :=
                        (Sign * Freq) / Float (2 ** Chan.Sweep_Remaining);
                   begin
@@ -379,7 +384,9 @@ package body VirtAPU is
                   Chan.Level := 0.0;
                else
                   Chan.Decay_Remaining := Chan.Decay_Remaining - 1;
-                  Chan.Level := Sample ((Float (Chan.Vol) / Float (Chan.Decay_Ticks)) * Float (Chan.Decay_Remaining));
+                  Chan.Level :=
+                    Sample ((Float (Chan.Vol) / Float (Chan.Decay_Ticks)) *
+                              Float (Chan.Decay_Remaining));
                end if;
             when others => null;
          end case;
@@ -411,7 +418,7 @@ package body VirtAPU is
    -------------
 
    procedure Note_On (This    : in out Instance;
-                      Chan_Id :        Channel_Id;
+                      Chan_Id :        Channel_ID;
                       Freq    :        Frequency)
    is
       Chan : Channel renames This.Channels (Chan_Id);
@@ -432,7 +439,7 @@ package body VirtAPU is
    --------------
 
    procedure Note_Off (This    : in out Instance;
-                       Chan_Id :        Channel_Id)
+                       Chan_Id :        Channel_ID)
    is
       Chan : Channel renames This.Channels (Chan_Id);
    begin
@@ -450,7 +457,7 @@ package body VirtAPU is
    ---------------
 
    procedure Set_Width (This    : in out Instance;
-                        Chan_Id :        Channel_Id;
+                        Chan_Id :        Channel_ID;
                         Width   :        Pulse_Width)
    is
       Chan : Channel renames This.Channels (Chan_Id);
@@ -463,7 +470,7 @@ package body VirtAPU is
    ---------------
 
    procedure Set_Sweep (This        : in out Instance;
-                        Chan_Id     :        Channel_Id;
+                        Chan_Id     :        Channel_ID;
                         Kind        :        Sweep_Kind;
                         Sweep_Len   :        Positive;
                         Sweep_Ticks :        Tick_Count)
@@ -480,7 +487,7 @@ package body VirtAPU is
    ----------------
 
    procedure Set_Volume (This    : in out Instance;
-                         Chan_Id :        Channel_Id;
+                         Chan_Id :        Channel_ID;
                          Vol     :        Volume)
    is
       Chan : Channel renames This.Channels (Chan_Id);
@@ -493,7 +500,7 @@ package body VirtAPU is
    ---------------
 
    procedure Set_Decay (This    : in out Instance;
-                        Chan_Id :        Channel_Id;
+                        Chan_Id :        Channel_ID;
                         Ticks   :        Tick_Count)
    is
       Chan : Channel renames This.Channels (Chan_Id);
