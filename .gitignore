@@ -1,2 +1,4 @@
-obj
-
+obj/
+lib/
+alire/
+alire.lock
