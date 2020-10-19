@@ -1,4 +1,3 @@
-with HAL;
 with Interfaces;
 
 --  Virtual Audio Processing Unit
@@ -21,7 +20,7 @@ package VirtAPU is
    type Mode_Kind is (Pulse, Triangle, Noise_1, Noise_2);
    --  Mode of the channel oscillator
 
-   type Tick_Count is new HAL.UInt32;
+   type Tick_Count is new Interfaces.Unsigned_32;
 
    type Volume is range 0 .. 100;
 
